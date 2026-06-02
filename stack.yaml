@@ -1,0 +1,11 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+functions:
+  search-tmdb:
+    lang: node25
+    handler: ./search-tmdb
+    image: celerii/search-tmdb:latest
+    secrets:
+      - tmdb-access-token
