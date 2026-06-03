@@ -9,3 +9,10 @@ functions:
     image: celerii/search-tmdb:latest
     secrets:
       - tmdb-access-token
+  add-to-watchlist:
+    lang: node25
+    handler: ./add-to-watchlist
+    image: celerii/add-to-watchlist:latest
+    secrets:
+      - couchdb-user
+      - couchdb-password

@@ -23,7 +23,7 @@ module.exports = async (event, context) => {
 }
 
 /**
- * Get TMDB access token from openfaas secret
+ * Get TMDB access token from OpenFaaS secret
  */
 async function getTmdbAccessToken() {
   try {
@@ -58,7 +58,7 @@ async function searchMovies(tmdbAccessToken, params) {
       method: 'GET',
       headers,
     })
-    .then(res => res.json());
+      .then(res => res.json());
   } catch (err) {
     console.error("TMDB request failed:", err);
     return undefined;
