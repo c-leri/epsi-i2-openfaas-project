@@ -16,3 +16,10 @@ functions:
     secrets:
       - couchdb-user
       - couchdb-password
+  get-watchlist:
+    lang: node25
+    handler: ./get-watchlist
+    image: celerii/get-watchlist:latest
+    secrets:
+      - couchdb-user
+      - couchdb-password

@@ -9,12 +9,6 @@ module.exports = async (event, context) => {
       .succeed("Missing required parameter: user");
   }
 
-  if (!event.body?.movie?.length) {
-    return context
-      .status(400)
-      .succeed("Missing required parameter: movie");
-  }
-
   const couchdbCredentials = await getCouchdbCredentials();
 
   if (!couchdbCredentials) {
@@ -28,72 +22,27 @@ module.exports = async (event, context) => {
     return context.fail(err);
   }
 
-  try {
-    await addMovieToWatchlist(db, event.body.user, event.body.movie);
-  } catch (err) {
-    return context.fail(err);
-  }
-
   let watchlist = [];
   try {
-    watchlist = await getWatchlist(event.body.user);
+    const doc = await db.get(event.body.user);
+
+    if (doc.movies?.length) {
+      watchlist = doc.movies;
+    }
   } catch (err) {
-    return context.fail(err);
+    if (err.error === "not_found") {
+      // Special error if no watchlist exist for the user
+      return context
+        .status(404)
+        .succeed(`No watchlist found for user: ${event.body.user}`);
+    } else {
+      return context.fail(err);
+    }
   }
 
   return context
     .status(200)
     .succeed(JSON.stringify(watchlist));
-}
-
-/**
- * Get the provided user's watchlist from the get-watchlist function
- * @param {string} user
- */
-async function getWatchlist(user) {
-  const url = new URL("http://gateway.openfaas:8080/function/get-watchlist");
-
-  const headers = {
-    "Content-Type": "application/json"
-  };
-
-  const res = await fetch(url, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ user: user }),
-  });
-
-  // Throw an error if the request didn't succeed
-  if (res.status >= 400) {
-    throw new Error(await res.text());
-  }
-
-  return await res.json();
-}
-
-/**
- * @param {string} user
- * @param {string} movie
- */
-async function addMovieToWatchlist(db, user, movie) {
-  try {
-    const doc = await db.get(user);
-
-    // Add movie to list if it isn't already in there
-    const movies = doc.movies ?? [];
-    if (!movies.includes(movie)) {
-      movies.push(movie);
-    }
-
-    await db.insert({ _id: user, _rev: doc._rev, movies: movies });
-  } catch (err) {
-    if (err.error === "not_found") {
-      // Document doesn't exist, create it
-      await db.insert({ _id: user, movies: [movie] });
-    } else {
-      throw err;
-    }
-  }
 }
 
 /**
