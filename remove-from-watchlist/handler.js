@@ -29,9 +29,15 @@ module.exports = async (event, context) => {
   }
 
   try {
-    await addMovieToWatchlist(db, event.body.user, event.body.movie);
+    await removeMovieFromWatchlist(db, event.body.user, event.body.movie);
   } catch (err) {
-    return context.fail(err);
+    if (err.error === "not_found") {
+      return context
+        .status(404)
+        .succeed(`No watchlist found for user: ${event.body.user}`);
+    } else {
+      return context.fail(err);
+    }
   }
 
   let watchlist = [];
@@ -75,22 +81,12 @@ async function getWatchlist(user) {
  * @param {string} user
  * @param {string} movie
  */
-async function addMovieToWatchlist(db, user, movie) {
-  try {
-    const doc = await db.get(user);
+async function removeMovieFromWatchlist(db, user, movie) {
+  const doc = await db.get(user);
 
-    // Add movie to document's movies if it isn't already in there
-    const movies = doc.movies ?? [];
-    if (!movies.includes(movie)) {
-      await db.insert({ _id: user, _rev: doc._rev, movies: [...movies, movie] });
-    }
-  } catch (err) {
-    if (err.error === "not_found") {
-      // Document doesn't exist, create it
-      await db.insert({ _id: user, movies: [movie] });
-    } else {
-      throw err;
-    }
+  // Remove movie from document's movies if it is in there
+  if (doc.movies?.includes(movie)) {
+    await db.insert({ _id: user, _rev: doc._rev, movies: doc.movies.filter(m => m !== movie) });
   }
 }
 

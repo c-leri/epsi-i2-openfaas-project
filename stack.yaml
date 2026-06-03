@@ -23,3 +23,10 @@ functions:
     secrets:
       - couchdb-user
       - couchdb-password
+  remove-from-watchlist:
+    lang: node25
+    handler: ./remove-from-watchlist
+    image: celerii/remove-from-watchlist:latest
+    secrets:
+      - couchdb-user
+      - couchdb-password
