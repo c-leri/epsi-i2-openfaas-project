@@ -40,9 +40,44 @@ module.exports = async (event, context) => {
     }
   }
 
+  let detailedWatchlist = [];
+  // Only get the movies details if the watchlist is not empty
+  if (watchlist.length) {
+    try {
+      detailedWatchlist = await getMoviesDetails(watchlist);
+    } catch (err) {
+      return context.fail(err);
+    }
+  }
+
   return context
     .status(200)
-    .succeed(JSON.stringify(watchlist));
+    .succeed(JSON.stringify(detailedWatchlist));
+}
+
+/**
+ * Get the movies details from the get-movies-tmdb function
+ * @param {string[]} movies
+ */
+async function getMoviesDetails(movies) {
+  const url = new URL("http://gateway.openfaas:8080/function/get-movies-tmdb");
+
+  const headers = {
+    "Content-Type": "application/json"
+  };
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ movies: movies }),
+  });
+
+  // Throw an error if the request didn't succeed
+  if (res.status >= 400) {
+    throw new Error(await res.text());
+  }
+
+  return await res.json();
 }
 
 /**
