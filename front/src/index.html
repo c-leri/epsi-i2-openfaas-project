@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>y'a rien à regarder.exe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="scanlines"></div>
+  <div class="noise"></div>
+
+  <div class="boot-screen" id="bootScreen">
+    <div class="boot-text">
+      <div class="boot-line">INITIALIZING Y'A RIEN À REGARDER.EXE v1.0.0</div>
+      <div class="boot-line delay-1">LOADING USER PROFILE... <span class="ok">OK</span></div>
+      <div class="boot-line delay-2">CONNECTING TO SERVERLESS CLOUD... <span class="ok">OK</span></div>
+      <div class="boot-line delay-3">FETCHING WATCHLIST... <span class="ok">OK</span></div>
+      <div class="boot-line delay-4">SYSTEM READY.</div>
+      <div class="boot-line delay-5">PRESS ANY KEY TO CONTINUE <span class="blink">_</span></div>
+    </div>
+  </div>
+
+  <div class="app" id="app" style="display:none">
+    <header class="topbar">
+      <div class="topbar-logo">
+        <span class="logo-glitch" data-text="Y'A RIEN À REGARDER">Y'A RIEN À REGARDER</span>
+        <span class="logo-exe">.exe</span>
+      </div>
+      <div class="topbar-user" id="userBadge">
+        <div class="user-dot"></div>
+        <span class="user-name" id="userName">—</span>
+        <span class="user-uid" id="userUid">—</span>
+      </div>
+      <div class="topbar-status">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="status-text" id="statusText">IDLE</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <!-- LEFT PANEL -->
+      <section class="panel-left">
+        <div class="panel-label">// RECHERCHE</div>
+
+        <div class="search-box">
+          <span class="search-prefix">›</span>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="TITRE, ACTEUR, ANNÉE..."
+            autocomplete="off"
+          />
+          <button class="search-btn" id="searchBtn">
+            <span class="search-btn-text">RUN</span>
+          </button>
+        </div>
+
+        <div class="results-container" id="resultsContainer">
+          <div class="results-empty" id="resultsEmpty">
+            <div class="empty-icon">▓▓▓</div>
+            <div class="empty-text">EN ATTENTE DE COMMANDE</div>
+          </div>
+          <div class="results-list" id="resultsList"></div>
+        </div>
+      </section>
+
+      <!-- RIGHT PANEL -->
+      <section class="panel-right">
+        <div class="panel-label-row">
+          <div class="panel-label">// MA WATCHLIST</div>
+          <div class="watchlist-count">
+            <span id="watchlistCount">0</span> FILMS
+          </div>
+        </div>
+
+        <div class="watchlist-container" id="watchlistContainer">
+          <div class="watchlist-empty" id="watchlistEmpty">
+            <div class="wl-empty-art">
+              <div class="tv-icon">
+                <div class="tv-screen">NO SIGNAL</div>
+              </div>
+            </div>
+            <div class="empty-text">WATCHLIST VIDE<br/><small>Ajoutez des films pour commencer</small></div>
+          </div>
+          <div class="watchlist-list" id="watchlistList"></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast-container" id="toastContainer"></div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
