@@ -5,9 +5,7 @@ services:
     build: .
     image: yrtarexe-frontend:latest
     container_name: yrtarexe
-    ports:
-      - "3000:80"
     environment:
-      # Remplacer par l'URL réelle de vos fonctions OpenFaaS
-      BASE_URL: "http://127.0.0.1:8080/function"
+      OPENFAAS_GATEWAY_URL: "http://localhost:8080"
     restart: unless-stopped
+    network_mode: host

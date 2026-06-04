@@ -11,13 +11,12 @@ const CURRENT_USER = {
 };
 
 // Base URL des fonctions serverless
-// Remplacer par l'URL réelle en production via variable d'env ou config
-const BASE_URL = window.ENV_BASE_URL || "http://127.0.0.1:8080/function";
+const BASE_URL = `${location.origin}/function`;
 
 // Routes serverless
 const ROUTES = {
-  searchTmdb:        `${BASE_URL}/search-tmdb`,
-  addToWatchlist:    `${BASE_URL}/add-to-watchlist`,
+  searchTmdb:          `${BASE_URL}/search-tmdb`,
+  addToWatchlist:      `${BASE_URL}/add-to-watchlist`,
   removeFromWatchlist: `${BASE_URL}/remove-from-watchlist`,
-  getWatchlist:      `${BASE_URL}/get-watchlist`,
+  getWatchlist:        `${BASE_URL}/get-watchlist`,
 };

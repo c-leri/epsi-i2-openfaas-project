@@ -5,16 +5,12 @@
 
 FROM nginx:1.25-alpine
 
-# Copie la config nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
 # Copie les sources du frontend
 COPY src/ /usr/share/nginx/html/
 
-# Copie et configure l'entrypoint (injection de BASE_URL)
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Copie la config nginx
+COPY nginx.conf.template /nginx.conf.template
 
 EXPOSE 80
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/bin/sh" , "-c" , "envsubst '$OPENFAAS_GATEWAY_URL' < /nginx.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]

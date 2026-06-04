@@ -38,7 +38,7 @@ const api = (() => {
   /**
    * Ajoute un film à la watchlist
    * @param {string} userId - UID de l'utilisateur
-   * @param {*} movie - Objet film ou ID film
+   * @param {string} movie - ID film
    * @returns {Promise<*>}
    */
   async function addToWatchlist(userId, movie) {
@@ -48,7 +48,7 @@ const api = (() => {
   /**
    * Supprime un film de la watchlist
    * @param {string} userId - UID de l'utilisateur
-   * @param {*} movie - Objet film ou ID film
+   * @param {string} movie - ID film
    * @returns {Promise<*>}
    */
   async function removeFromWatchlist(userId, movie) {

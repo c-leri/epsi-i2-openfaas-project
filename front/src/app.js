@@ -227,7 +227,7 @@
     btn.textContent = "...";
     setStatus("loading", "ADDING...");
     try {
-      await api.addToWatchlist(CURRENT_USER.uid, movie);
+      await api.addToWatchlist(CURRENT_USER.uid, getMovieId(movie));
       // Optimistic update
       if (!isInWatchlist(getMovieId(movie))) watchlist.push(movie);
       renderWatchlist();
@@ -247,7 +247,7 @@
     setStatus("loading", "REMOVING...");
     if (btn) { btn.disabled = true; btn.textContent = "..."; }
     try {
-      await api.removeFromWatchlist(CURRENT_USER.uid, movie);
+      await api.removeFromWatchlist(CURRENT_USER.uid, getMovieId(movie));
       // Optimistic update
       const id = getMovieId(movie);
       watchlist = watchlist.filter(m => getMovieId(m) !== id);
@@ -272,7 +272,7 @@
   }
 
   function getMovieId(movie) {
-    return movie.id ?? movie.imdb_id ?? movie.tmdb_id ?? movie.title;
+    return movie.id + "";
   }
 
   function isInWatchlist(id) {
