@@ -1,0 +1,144 @@
+{
+  "info": {
+    "name": "OpenFaaS Watchlist",
+    "description": null,
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search TMDB",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{base_url}}/search-tmdb",
+          "protocol": "",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "search-tmdb"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Add to Watchlist",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{base_url}}/add-to-watchlist",
+          "protocol": "",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "add-to-watchlist"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user\": \"\",\n  \"movie\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Get Watchlist",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{base_url}}/get-watchlist",
+          "protocol": "",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "get-watchlist"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Remove from Watchlist",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{base_url}}/remove-from-watchlist",
+          "protocol": "",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "remove-from-watchlist"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user\": \"\",\n  \"movie\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8080/function",
+      "type": "default"
+    }
+  ]
+}
