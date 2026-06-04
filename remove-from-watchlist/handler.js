@@ -57,7 +57,7 @@ module.exports = async (event, context) => {
  * @param {string} user
  */
 async function getWatchlist(user) {
-  const url = new URL("http://gateway.openfaas:8080/function/get-watchlist");
+  const url = new URL(process.env.GET_WATCHLIST_URL);
 
   const headers = {
     "Content-Type": "application/json"
@@ -96,7 +96,7 @@ async function removeMovieFromWatchlist(db, user, movie) {
  * @returns The database object
  */
 async function connectToCouchdb(credentials) {
-  const nano = require("nano")("http://couchdb-couchdb.default.svc.cluster.local:5984");
+  const nano = require("nano")(process.env.COUCHDB_URL);
   await nano.auth(credentials.user, credentials.password);
 
   try {

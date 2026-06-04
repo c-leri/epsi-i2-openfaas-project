@@ -40,7 +40,7 @@ async function getTmdbAccessToken() {
  */
 async function searchMovies(tmdbAccessToken, params) {
   // Build url with query
-  const url = new URL('https://api.themoviedb.org/3/search/movie');
+  const url = new URL(`${process.env.TMDB_API_URL}/search/movie`);
   url.searchParams.set('include_adult', 'true');
   url.searchParams.set('language', 'fr-FR');
   url.searchParams.set('page', 1);

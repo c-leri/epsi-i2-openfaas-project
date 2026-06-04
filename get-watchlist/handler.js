@@ -60,7 +60,7 @@ module.exports = async (event, context) => {
  * @param {string[]} movies
  */
 async function getMoviesDetails(movies) {
-  const url = new URL("http://gateway.openfaas:8080/function/get-movies-tmdb");
+  const url = new URL(process.env.GET_MOVIES_TMDB_URL);
 
   const headers = {
     "Content-Type": "application/json"
@@ -86,7 +86,7 @@ async function getMoviesDetails(movies) {
  * @returns The database object
  */
 async function connectToCouchdb(credentials) {
-  const nano = require("nano")("http://couchdb-couchdb.default.svc.cluster.local:5984");
+  const nano = require("nano")(process.env.COUCHDB_URL);
   await nano.auth(credentials.user, credentials.password);
 
   try {

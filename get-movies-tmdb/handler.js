@@ -55,7 +55,7 @@ async function getMovies(tmdbAccessToken, movies) {
  */
 async function getMovie(tmdbAccessToken, movie) {
   // Build url with query
-  const url = new URL(`https://api.themoviedb.org/3/movie/${movie}`);
+  const url = new URL(`${process.env.TMDB_API_URL}/movie/${movie}`);
 
   // Build headers with access token
   const headers = {

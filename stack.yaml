@@ -7,25 +7,41 @@ functions:
     lang: node25
     handler: ./search-tmdb
     image: celerii/search-tmdb:latest
+    environment:
+      TMDB_API_URL: "https://api.themoviedb.org/3"
     secrets:
       - tmdb-access-token
+    annotations:
+      com.openfaas.scale.min: "1"
+      com.openfaas.scale.max: "3"
   get-movies-tmdb:
     lang: node25
     handler: ./get-movies-tmdb
     image: celerii/get-movies-tmdb:latest
+    environment:
+      TMDB_API_URL: "https://api.themoviedb.org/3"
     secrets:
       - tmdb-access-token
-  add-to-watchlist:
-    lang: node25
-    handler: ./add-to-watchlist
-    image: celerii/add-to-watchlist:latest
-    secrets:
-      - couchdb-user
-      - couchdb-password
+    annotations:
+      com.openfaas.scale.min: "1"
+      com.openfaas.scale.max: "3"
   get-watchlist:
     lang: node25
     handler: ./get-watchlist
     image: celerii/get-watchlist:latest
+    environment:
+      COUCHDB_URL: "http://couchdb-couchdb.default:5984"
+      GET_MOVIES_TMDB_URL: "http://gateway.openfaas:8080/function/get-movies-tmdb"
+    secrets:
+      - couchdb-user
+      - couchdb-password
+  add-to-watchlist:
+    lang: node25
+    handler: ./add-to-watchlist
+    environment:
+      COUCHDB_URL: "http://couchdb-couchdb.default:5984"
+      GET_WATCHLIST_URL: "http://gateway.openfaas:8080/function/get-watchlist"
+    image: celerii/add-to-watchlist:latest
     secrets:
       - couchdb-user
       - couchdb-password
@@ -33,6 +49,9 @@ functions:
     lang: node25
     handler: ./remove-from-watchlist
     image: celerii/remove-from-watchlist:latest
+    environment:
+      COUCHDB_URL: "http://couchdb-couchdb.default:5984"
+      GET_WATCHLIST_URL: "http://gateway.openfaas:8080/function/get-watchlist"
     secrets:
       - couchdb-user
       - couchdb-password
