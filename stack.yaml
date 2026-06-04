@@ -9,6 +9,12 @@ functions:
     image: celerii/search-tmdb:latest
     secrets:
       - tmdb-access-token
+  get-movies-tmdb:
+    lang: node25
+    handler: ./get-movies-tmdb
+    image: celerii/get-movies-tmdb:latest
+    secrets:
+      - tmdb-access-token
   add-to-watchlist:
     lang: node25
     handler: ./add-to-watchlist
